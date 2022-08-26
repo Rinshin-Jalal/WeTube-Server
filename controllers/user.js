@@ -8,8 +8,7 @@ import isEmpty from "../utils/isEmpty.js";
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(req.body);
-  console.log(name, email, password);
+
   if (isEmpty(name) || isEmpty(email) || isEmpty(password)) {
     res.status(400).json({ msg: "Please enter all fields" });
   }

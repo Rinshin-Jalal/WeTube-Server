@@ -12,9 +12,23 @@ import { protect } from "../middleware/authMiddleware.js";
 const videoRouter = express.Router();
 
 videoRouter.get("/", getVideos);
-videoRouter.post("/", protect, upload.single("video"), setVideos);
+videoRouter.post(
+  "/",
+  protect,
+  upload.fields([
+    {
+      name: "video",
+      maxCount: 1,
+    },
+    {
+      name: "thumbnail",
+      maxCount: 1,
+    },
+  ]),
+  setVideos
+);
 videoRouter.get("/:id", getVideo);
 videoRouter.delete("/:id", protect, deleteVideo);
-videoRouter.put("/:id", protect, updateVideo);
+videoRouter.put("/:id", protect, upload.single("thumbnail"), updateVideo);
 
 export default videoRouter;

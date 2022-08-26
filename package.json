@@ -1,7 +1,7 @@
 {
   "name": "WeTube-Server",
   "version": "1.0.0",
-  "type":"module",
+  "type": "module",
   "repository": "https://github.com/Rinshin-Jalal/WeTube-Server.git",
   "author": "Rinshin Jalal",
   "license": "MIT",
@@ -10,9 +10,16 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.30.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.5.2"
+    "mongoose": "^6.5.2",
+    "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
+    "shortid": "^2.2.16"
   }
 }

@@ -1,22 +1,23 @@
 import asyncHandler from "express-async-handler";
-import userModel from "../models/userModel.js";
+import userModel from "../models/user.js";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 import dotenv from "dotenv";
 dotenv.config();
+import isEmpty from "../utils/isEmpty.js";
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-  if (!name || !email || !password) {
-    res.status(400);
-    throw new Error("Please enter all fields");
+  console.log(req.body);
+  console.log(name, email, password);
+  if (isEmpty(name) || isEmpty(email) || isEmpty(password)) {
+    res.status(400).json({ msg: "Please enter all fields" });
   }
 
   //   check if the user is already in the database
   const userExists = await userModel.findOne({ email });
   if (userExists) {
-    res.status(400);
-    throw new Error("User already exists");
+    res.status.json({ msg: "User already exists" });
   }
   //   hash the password
   const salt = await bcryptjs.genSalt(10);

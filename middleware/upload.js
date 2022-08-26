@@ -1,14 +1,7 @@
-import { v2 as cloudinary } from "cloudinary";
+// import { v2 as cloudinary } from "cloudinary";
+import cloudinary from "../config/cloudinary.js";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import multer from "multer";
-import dotenv from "dotenv";
-dotenv.config();
-
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.CLOUD_API_SECRET,
-});
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
@@ -50,8 +43,6 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// file upload mp4
-
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage, fileFilter });
 
 export default upload;

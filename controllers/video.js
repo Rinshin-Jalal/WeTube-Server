@@ -2,6 +2,8 @@ import asyncHandler from "express-async-handler";
 import videoModel from "../models/video.js";
 import userModel from "../models/user.js";
 import isEmpty from "../utils/isEmpty.js";
+import getPublicId from "../utils/getPublicId.js";
+import cloudinary from "../config/cloudinary.js";
 
 const getVideos = asyncHandler(async (req, res) => {
   const videos = await videoModel.find({});
@@ -10,7 +12,6 @@ const getVideos = asyncHandler(async (req, res) => {
 });
 
 const setVideos = asyncHandler(async (req, res) => {
-  console.log(req.files);
   const videoURL = req.files?.video?.[0]?.path;
 
   const thumbnail = req.files?.thumbnail?.[0]?.path;
@@ -57,7 +58,29 @@ const deleteVideo = asyncHandler(async (req, res) => {
     res.status(401).json({ msg: "Not authorized" });
   }
 
+  const thumbnailPublicId = getPublicId(video.thumbnail);
+  const videoPublicId = getPublicId(video.url);
+
   await videoModel.findByIdAndDelete(req.params.id);
+
+  cloudinary.uploader.destroy(
+    `videos/${videoPublicId}`,
+    {
+      resource_type: "video",
+    },
+    (error, result) => {
+      result.result === "ok" && console.log("🙌");
+      error && console.log(error);
+    }
+  );
+
+  cloudinary.uploader.destroy(
+    `thumbnails/${thumbnailPublicId}`,
+    (error, result) => {
+      result.result === "ok" && console.log("🙌");
+      error && console.log(error);
+    }
+  );
 
   res.status(200).json({ message: "Video deleted" });
 });
@@ -73,6 +96,18 @@ const updateVideo = asyncHandler(async (req, res) => {
   if (video.user.toString() !== req.user.id) {
     res.status(401);
     res.status(401).json({ msg: "Not authorized" });
+  }
+
+  if (video.thumbnail && newThumbnailUrl) {
+    const thumbnailPublicId = getPublicId(video.thumbnail);
+
+    cloudinary.uploader.destroy(
+      `thumbnails/${thumbnailPublicId}`,
+      (error, result) => {
+        result.result === "ok" && console.log("🙌");
+        error && console.log(error);
+      }
+    );
   }
 
   const updatedVideo = await videoModel.findByIdAndUpdate(

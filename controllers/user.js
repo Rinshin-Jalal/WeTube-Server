@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import userModel from "../models/user.js";
+import videoModel from "../models/video.js";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 import dotenv from "dotenv";
@@ -64,7 +65,7 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-const getMe = asyncHandler(async (req, res) => {
+const getYourVideos = asyncHandler(async (req, res) => {
   res.status(200).json(req.user);
 });
 
@@ -75,4 +76,4 @@ const generateToken = (id) => {
   });
 };
 
-export { registerUser, loginUser, getMe };
+export { registerUser, loginUser, getYourVideos };

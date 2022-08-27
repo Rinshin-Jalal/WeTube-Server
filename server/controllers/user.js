@@ -66,7 +66,8 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const getYourVideos = asyncHandler(async (req, res) => {
-  res.status(200).json(req.user);
+  const user = await userModel.findById(req.user._id);
+  res.status(200).json(user.populate("videos"));
 });
 
 // Generate token JWT

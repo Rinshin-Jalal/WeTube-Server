@@ -29,7 +29,7 @@ userRouter.put(
 );
 userRouter.put("/follow/:id", protect, isVerified, followUser);
 userRouter.put("/unfollow/:id", protect, isVerified, unfollowUser);
-userRouter.put("/verify/:id/:token", protect, verifyUser);
+userRouter.put("/verify/:id/:token", verifyUser);
 userRouter.put("/request-verification", protect, requestVerification);
 userRouter.get("/:name", getUser);
 userRouter.post("/reset-password", resetPassword);

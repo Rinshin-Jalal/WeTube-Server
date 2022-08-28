@@ -1,15 +1,11 @@
-import './App.css'
-import Home from './pages/Home'
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from "react-router-dom";
-import SignUp from './pages/SignUp';
+import "./App.css";
+import Home from "./pages/Home/Home";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SignUp from "./pages/SignUpAndSignIn/SignUp";
 
-function App() {  
+function App() {
   return (
-    <div className='container'>
+    <div className="container">
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -17,7 +13,7 @@ function App() {
         </Routes>
       </Router>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

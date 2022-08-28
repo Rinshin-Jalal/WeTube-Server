@@ -56,7 +56,7 @@ const registerUser = asyncHandler(async (req, res) => {
     token: generateToken(user.entityId),
   });
 
-  const message = `${process.env.BASE_URL}/user/verify/${user.enityId}/${token.token}`;
+  const message = `${process.env.BASE_URL}/user/verify/${user.entityId}/${token.token}`;
   await sendEmail(email, "Verify Email", message);
 
   res.status(201).json({
@@ -70,13 +70,16 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const requestVerification = asyncHandler(async (req, res) => {
-  const token = await tokenRepo
+  let token = await tokenRepo
     .search()
     .where("user")
     .equals(req.user.entityId)
     .return.first();
   if (!token) {
-    return res.status(400).json({ msg: "Token not found" });
+    token = await tokenRepo.createAndSave({
+      user: req.user.entityId,
+      token: generateToken(req.user.entityId),
+    });
   }
   console.log();
   const message = `${process.env.BASE_URL}/api/users/verify/${req.user.entityId}/${token.token}`;
@@ -97,6 +100,9 @@ const verifyUser = asyncHandler(async (req, res) => {
     return res.status(400).json({ msg: "Token not found" });
   }
   const user = await userRepo.fetch(id);
+
+  if (!user) return res.status(400).json({ msg: "user not found" });
+
   user.isVerified = true;
   await userRepo.save(user);
   await tokenRepo.remove(tokenFound.entityId);
@@ -232,7 +238,8 @@ const getUser = asyncHandler(async (req, res) => {
     entityId: user.entityId,
     profile: user.profile,
     username: user.username,
-    followers: user.followers.length,
+    followers: user.followers && user.followers.length,
+    isVerified: user.isVerified,
     videos,
   });
 });

@@ -34,7 +34,7 @@ const protect = asyncHandler(async (req, res, next) => {
 });
 
 const isVerified = asyncHandler(async (req, res, next) => {
-  const user = await userRepo.fetch(req.user._id);
+  const user = await userRepo.fetch(req.user.entityId);
   if (user.isVerified) {
     next();
   } else {

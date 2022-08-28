@@ -16,9 +16,9 @@ const Navbar = () => {
             <img src={logo} alt='logo' />
         </div>
         <div className={menuOpen ? 'wrap-expanded' : 'wrap'}>
-            <div class="search">
-                <input type="text" class="searchTerm" placeholder="Search for videoz" />
-                <button type="submit" class="searchButton">
+            <div className="search">
+                <input type="text" className="searchTerm" placeholder="Search for videoz" />
+                <button type="submit" className="searchButton">
                     <img src={search} alt='search' />
                 </button>
             </div>

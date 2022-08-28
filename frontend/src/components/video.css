@@ -5,6 +5,7 @@
     margin: auto;
     display: grid;
     margin-top: 20px;
+    /* height: 100%; */
     /* background-color: aqua; */
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }

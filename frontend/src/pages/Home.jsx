@@ -1,11 +1,11 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import Videos from '../components/Videos'
-import './Home.css'
+// import './Home.css'
 
 const Home = () => {
   return (
-    <div>
+    <div className='container'>
         <Navbar />
         <Videos />
     </div>

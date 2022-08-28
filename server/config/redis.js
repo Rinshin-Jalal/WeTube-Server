@@ -1,50 +1,17 @@
-import { Client, Entity, Schema, Repository } from "redis-om";
+import { Client } from "redis-om";
+import dotenv from "dotenv";
+dotenv.config();
 
-const client = new Client();
+/* pulls the Redis URL from .env */
+const url = process.env.REDIS_URL;
 
-const connect = async () => {
+export const client = new Client();
+
+export async function ConnectDB() {
   if (!client.isOpen()) {
     await client.open(process.env.REDIS_URL);
+    console.log("connected to redis");
   }
-};
-
-class User extends Entity {}
-
-let schema = new Schema(
-  User,
-  {
-    username: {
-      type: "string",
-    },
-    email: {
-      type: "string",
-    },
-    password: {
-      type: "string",
-    },
-    profile: {
-      type: "string",
-    },
-    videos: {
-      type: "string[]",
-    },
-
-    //   id:{
-
-    //   }
-  },
-  {
-    dataStructure: "JSON",
-  }
-);
-
-export async function createCar(data) {
-  await connect();
-
-  const repo = new Repository(schema, client);
-
-  const car = repo.createEntity(data);
-
-  const id = await repo.save(car);
-  return id;
 }
+
+ConnectDB();

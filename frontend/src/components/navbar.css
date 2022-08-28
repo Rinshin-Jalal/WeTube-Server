@@ -117,6 +117,93 @@
     border: #5dd2e4;
   }
 
+  .menu {
+    display: none;
+  }
+
+  .menu-links {
+    background-color: #1b1b1b;
+    width: 80%;
+    height: 100%;
+    display: flex;
+    margin-top: 35rem;
+    left: 20%;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    flex-direction: column;
+    animation: hamburger 0.4s ease-in-out;
+  }
+
+  @keyframes hamburger {
+    0% {
+      transform: translateX(100%);
+    }
+    50% {
+      transform: translateX(-5%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .nav-links h1 {
+    display: none;
+  }
+
+  .menu-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 10vh;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-family: 'Poppins';
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+
+  .menu-link img {
+    margin-right: 10px;
+  }
+
+  .menu-link h1 {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 500;
+    font-family: 'Poppins';
+    margin-left: 5px;
+  }
+
+  .menu-login {
+    width: 80%;
+    margin-top: 25px;
+  }
+
+  .menu-login button {
+    width: 100%;
+    height: 40px;
+    border: 2px solid #fff;
+    color: #fff;
+    background-color: transparent;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .wrap-expanded {
+    display: block;
+}
+
+  .menu-links img {
+    width: 30px;
+    margin-left: 10px;
+  }
+
   @media screen and (max-width: 1000px) {
     .nav-logo {
         width: 20%;
@@ -133,11 +220,22 @@
     .user img {
         width: 50px;
     }
+    .login button {
+        font-size: 0.7rem;
+        height: 30px;
+        width: 100%;
+    }
+    .nav-links img {
+        width: 30px;
+    }
   }
 
   @media screen and (max-width: 550px) {
     .nav-links img {
         width: 25px;
+    }
+    .nav-logo {
+        width: 25%;
     }
     .user img {
         width: 70%;
@@ -168,3 +266,27 @@
         width: 100%;
     }
   }
+
+  @media screen and (max-width: 450px) {
+    .nav-links {
+        display: none;
+    }
+    .nav-logo {
+        width: 100px;
+    }
+    .wrap {
+        display: none;
+    }
+    .menu {
+        display: block;
+        width: 40px;
+        background: transparent;
+        border: none;
+        z-index: 1;
+    }
+    .menu img {
+        width: 100%;
+    }
+  }
+
+  

@@ -10,6 +10,10 @@ const storage = new CloudinaryStorage({
       return {
         folder: "thumbnails",
       };
+    if (file.fieldname === "profile")
+      return {
+        folder: "profiles",
+      };
     return {
       folder: "videos",
 
@@ -19,7 +23,7 @@ const storage = new CloudinaryStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  if (file.fieldname === "thumbnail") {
+  if (file.fieldname === "thumbnail" || file.fieldname === "profile") {
     if (
       file.mimetype === "image/png" ||
       file.mimetype === "image/jpg" ||
@@ -46,3 +50,11 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage: storage, fileFilter });
 
 export default upload;
+// app.post("/", upload.single("video"), async (req, res) => {
+//   if (!req.file) {
+//     return res.json({ msg: "error" });
+//   }
+//   console.log(JSON.stringify(req.file), "ggggg");
+//   console.log("dddddddddddddddd");
+//   return res.json({ pic: req.file });
+// });

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
-import userModel from "../models/user.js";
+import { userRepo } from "../models/user.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -18,7 +18,7 @@ const protect = asyncHandler(async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       // Get user from token
-      req.user = await userModel.findById(decoded.id).select("-password");
+      req.user = await userRepo.fetch(decoded.id);
 
       next();
     } catch (error) {
@@ -33,4 +33,13 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { protect };
+const isVerified = asyncHandler(async (req, res, next) => {
+  const user = await userRepo.fetch(req.user._id);
+  if (user.isVerified) {
+    next();
+  } else {
+    res.status(401).json({ msg: "Please verify your account" });
+  }
+});
+
+export { protect, isVerified };

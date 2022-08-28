@@ -29,6 +29,20 @@ const getVideos = asyncHandler(async (req, res) => {
   res.status(200).json(videosWithAuthor);
 });
 
+const searchVideo = asyncHandler(async (req, res) => {
+  const videos = await videoRepo
+    .search()
+    .where("title")
+    .matches(req.params.text)
+    .or("description")
+    .matches(req.params.text)
+    .return.all();
+
+  if (!videos) return res.status(404).json({ msg: "no matching videos lol" });
+
+  res.status(200).json(videos);
+});
+
 const setVideos = asyncHandler(async (req, res) => {
   const videoURL = req.files?.video?.[0]?.path;
 

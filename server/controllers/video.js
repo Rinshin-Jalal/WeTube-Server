@@ -69,6 +69,7 @@ const setVideos = asyncHandler(async (req, res) => {
     url: videoURL,
     user: req.user.entityId,
     _id: shortid.generate(),
+    createdAt: new Date(),
     ...(thumbnail && { thumbnail: thumbnail }),
   });
 

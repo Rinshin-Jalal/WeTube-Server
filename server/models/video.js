@@ -33,6 +33,9 @@ const videoSchema = new Schema(
     comments: {
       type: "string[]",
     },
+    createdAt: {
+      type: "date",
+    },
   },
   {
     dataStructure: "JSON",
